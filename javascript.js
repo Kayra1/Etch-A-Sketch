@@ -3,8 +3,8 @@ function redrawGrid() {
     gridHead = document.getElementById("grid-container");
 
     // Settings for the grid:
-    let gridSize = 50;
-
+    let gridSize = gridHead.getAttribute("gridsize");
+    
     // Remove whatever was inside the grid
     eraseGrid();
 
@@ -13,7 +13,7 @@ function redrawGrid() {
 
     // Hover listeners are added on mousedown
     // Hover listeners are removed on mouseup
-    HoverListenerController();
+    addHoverListener();
 }
 
 function drawGrid(gridSize) {
@@ -49,8 +49,8 @@ function eraseGrid() {
     }
 }
 
-function HoverListenerController(){
-
+function addHoverListener(){
+    
     document.addEventListener('mousedown', HoverListenerAdder);
     document.addEventListener('mouseup', HoverListenerRemover);
 
@@ -72,4 +72,81 @@ function HoverListenerRemover() {
     let oldGrid = document.getElementById("grid-container");
     let newGrid = oldGrid.cloneNode(true);
     oldGrid.parentNode.replaceChild(newGrid, oldGrid);
+}
+
+function removeHoverListener(){
+    document.removeEventListener('mousedown', HoverListenerAdder);
+    document.removeEventListener('mouseup', HoverListenerRemover);
+}
+
+function launchModal(){
+    // Stop painting functionality
+
+    removeHoverListener();
+
+    // Create the original settings modal
+    let settings = document.createElement("div");
+    let darkBackground = document.createElement("div");
+    let closeModal = document.createElement("button");
+    let modalContent = document.createElement("div");
+
+    settings.setAttribute("class","modal is-active");
+    darkBackground.setAttribute("class","modal-background");
+    modalContent.setAttribute("class", "modal-content");
+    closeModal.setAttribute("class", "modal-close is-large");
+    closeModal.setAttribute("onclick", "removeModal()");
+
+    // Append background first
+    settings.appendChild(darkBackground);
+
+    // Create the content
+    let settingsBox = document.createElement("div");
+    let settingsForm = document.createElement("form");
+    settingsBox.setAttribute("class", "box");
+
+
+    // Grid Size
+    let gridSizeQ = document.createElement("p");
+    gridSizeQ.innerText = "What is your preferred grid size?";
+    let gridSizeInput = document.createElement("input");
+    gridSizeInput.setAttribute("class", "input is-rounded");
+    gridSizeInput.setAttribute("id", "grid-size");
+    gridSizeInput.setAttribute("type", "number");
+    gridSizeInput.setAttribute("placeholder", "16");
+
+
+    // Append these settings to the content div
+    settingsBox.appendChild(gridSizeQ);
+    settingsBox.appendChild(gridSizeInput);
+
+    modalContent.appendChild(settingsBox);
+
+    // Append the content div to the settings modal second
+    settings.appendChild(modalContent);
+
+    // Append close button to the end
+    settings.appendChild(closeModal);
+
+    // Add this modal to the root of the grid
+    gridHead = document.getElementById("grid-container");
+    gridHead.appendChild(settings);
+}
+
+function removeModal() {
+    // Update Settings
+    let gridSize = document.getElementById('grid-size').value;
+    console.log(gridSize);
+
+
+    let gridHead = document.getElementById('grid-container');
+    gridHead.setAttribute('gridsize', `${gridSize}`);
+
+    // Find the modal (there will always be one)
+    mountedModal = document.getElementsByClassName("modal is-active");
+    
+    // Remove it
+    mountedModal[0].remove();
+
+    // Restart painting mode
+    addHoverListener();
 }
