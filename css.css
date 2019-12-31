@@ -1,0 +1,21 @@
+#title {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#shaker {
+    background-color: red;
+    color: white;
+}
+
+.gridRow {
+    clear: both;
+    text-align: center;
+}
+
+.gridSlotDiv {
+    border-style: solid;
+    border-radius: 1px;
+    float: left;
+}
+
