@@ -60,9 +60,13 @@ function HoverListenerAdder(){
     // Paint when hovered on
     const paintables = document.querySelectorAll('.gridSlotDiv');
 
+    // Get the color from the grid container
+    let color = document.getElementById("grid-container").getAttribute("swatchcolor");
+    console.log(color);
+
     paintables.forEach((element) => {
         element.addEventListener('mouseover', function() {
-            this.style.backgroundColor = "red";
+            this.style.backgroundColor = `${color}`;
         });
     });
 }

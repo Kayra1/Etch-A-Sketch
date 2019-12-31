@@ -33,10 +33,23 @@ function launchModal(){
     gridSizeInput.setAttribute("type", "number");
     gridSizeInput.setAttribute("placeholder", "16");
 
+    // Color
+    let gridColorQ = document.createElement("p");
+    gridColorQ.innerText = "Pick a color you like";
+    let gridColorInput = document.createElement("input");
+    gridColorInput.setAttribute("class", "input is-rounded");
+    gridColorInput.setAttribute("id", "pen-color");
+    gridColorInput.setAttribute("type", "color");
+    gridColorInput.setAttribute("placeholder", "#ff0000");    
+
+
 
     // Append these settings to the content div
     settingsBox.appendChild(gridSizeQ);
     settingsBox.appendChild(gridSizeInput);
+
+    settingsBox.appendChild(gridColorQ);
+    settingsBox.appendChild(gridColorInput);
 
     modalContent.appendChild(settingsBox);
 
@@ -53,9 +66,15 @@ function launchModal(){
 
 function removeModal() {
     // Save Settings
-    let gridSize = document.getElementById('grid-size').value;
     let gridHead = document.getElementById('grid-container');
+
+    // Grid Size
+    let gridSize = document.getElementById('grid-size').value;
     gridHead.setAttribute('gridsize', `${gridSize}`);
+
+    // Pen color
+    let gridColor = document.getElementById('pen-color').value;
+    gridHead.setAttribute('swatchcolor', `${gridColor}`);
 
     // Find the modal (there will always be only one)
     mountedModal = document.getElementsByClassName("modal is-active");
